@@ -34,16 +34,40 @@ const getEmpleado = (id, callback) => {
     }
 }
 
-// console.log(getEmpleado(5));
 
-getEmpleado(10, (err, empleado) => {
+const getSalario = (id, callback) => {
+    //al usar ? significa que si la funcion find no devuelve un null/undefined 
+    //entonces obtendra la propiedad salario
+    const salario = salarios.find(s => s.id === id)?.salario;
+    
+    if (salario){
+        callback(null, salario)
+    } else {
+        callback(`El salario para el empleado ${id} no existe`)
+    }
+}
+
+
+// console.log(getEmpleado(5));
+const id = 10;
+
+getEmpleado(id, (err, empleado) => {
 
     if (err) {
         console.log("Error!");
         return console.log(err);
+    } else {
+        console.log("Empleado Existe");
+        console.log(empleado.nombre);
     }
+})
 
-    console.log("Empleado Existe");
-    console.log(empleado);
+getSalario(id, (err, salario) => {
+    if (err) {
+        console.log("Error!");
+        return console.log(err);
+    } else {
+        console.log(salario);
+    }
 
 })
