@@ -17,6 +17,12 @@ class Tareas {
         this._lista = {}
     }
 
+    borrarTarea(id) {
+        if (this._lista[id]){
+            delete this._lista[id];
+        }
+    }
+
     crearTarea(desc){
         const tarea = new Tarea(desc);
 
@@ -32,7 +38,7 @@ class Tareas {
         console.log("");
         this.listaTareas.forEach((tarea, index) => {
 
-            const estado = (tarea.completadoEn==null)
+            const estado = (tarea.completadaEn==null)
                                     ? "Pendiente".red
                                     : "Completada".green
 
@@ -49,14 +55,14 @@ class Tareas {
 
             if (completadas){
                 //Mostrar tareas completadas
-                if (tarea.completadoEn) {
+                if (tarea.completadaEn) {
                     index+=1;
-                    console.log(`${(index + ".").green } ${tarea.desc} :: ${tarea.completadoEn}`);
+                    console.log(`${(index + ".").green } ${tarea.desc} :: ${(tarea.completadaEn).toString().green}`);
                 }
 
             } else {
                 //Mostrar tareas pendientes
-                if (!tarea.completadoEn) {
+                if (!tarea.completadaEn) {
                     index+=1;
                     console.log(`${(index + ".").green } ${tarea.desc} :: ${"Pendiente".red}`);
                 }

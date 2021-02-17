@@ -55,11 +55,12 @@ const inquirerMenu = async() => {
 
 const pausa = async() => {
 
+    console.log("");
     const pausaOpt = [
         {
             type: "input",
             name: "pausaOpt",
-            message: `\nPresione ${"ENTER".green} para continuar\n`,
+            message: `Presione ${"ENTER".green} para continuar\n`,
         }
     ];
 
@@ -86,9 +87,58 @@ const leerInput = async(message) => {
     return desc;
 }
 
+const listadoTareasBorrar = async(tareas = []) => {
+
+    //Con el map construimos propiedades en un objeto
+    const choices = tareas.map( (tarea, i) => {
+
+        return {
+            value: tarea.id,
+            name: `${ (i+1+".").green } ${tarea.desc}`
+        }
+    });
+
+    choices.unshift({
+        value: 0,
+        name: `${"0.".green} Cancelar`
+    })
+
+    const preguntas = [
+        {
+            type: "list",
+            name: "id",
+            message: "Borrar",
+            loop: false,
+            pageSize: 10,
+            choices //choices: choices
+        }
+    ];
+
+    const { id } = await inquirer.prompt(preguntas);
+
+    return id;
+}
+
+const confirmar = async(msg) => {
+
+    const pregunta = [
+        {
+            type: "confirm",
+            name: "ok",
+            default: false,
+            message: msg
+        }
+    ];
+
+    const { ok } = await inquirer.prompt(pregunta);
+
+    return ok;
+}
 
 module.exports = {
     inquirerMenu,
     pausa,
-    leerInput
+    leerInput,
+    listadoTareasBorrar,
+    confirmar
 }

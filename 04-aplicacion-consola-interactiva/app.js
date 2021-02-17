@@ -1,8 +1,10 @@
 const { guardarTareas, leerTareas } = require("./helpers/storage");
-const { 
-    inquirerMenu, 
-    pausa, 
-    leerInput 
+const {
+    inquirerMenu,
+    pausa,
+    leerInput,
+    listadoTareasBorrar,
+    confirmar
 } = require("./helpers/inquirer");
 
 const Tarea = require("./models/Tarea");
@@ -13,8 +15,8 @@ require("colors")
 console.clear();
 
 
-const main = async() => {
-    
+const main = async () => {
+
     let opt = "";
 
     const tareas = new Tareas();
@@ -24,7 +26,7 @@ const main = async() => {
     if (tareasFile) {
         tareas.cargarTareas(tareasFile);
     }
-    
+
     do {
         //await obliga  a esperar una respuesta de la funcion mostrarMenu()
         opt = await inquirerMenu();
@@ -33,25 +35,40 @@ const main = async() => {
             case "1":
                 const desc = await leerInput("Descripcion de la tarea: ");
                 tareas.crearTarea(desc);
-            break;
+                break;
             case "2":
                 tareas.listarTareas();
-            break;
+                break;
             case "3":
                 tareas.listarPendientesCompletadas(true);
-            break;
+                break;
             case "4":
                 tareas.listarPendientesCompletadas(false);
-            break;
+                break;
+            case "5":
+                //TODO
+                break;
+            case "6":
+                const id = await listadoTareasBorrar(tareas.listaTareas);
+
+                if (id!=0) {
+                    const borrar = await confirmar("¿Estas seguro?");
+
+                    if (borrar) {
+                        tareas.borrarTarea(id); 
+                        console.log("Tarea borrada correctamente");
+                    }
+                }
+                break;
         }
-        
+
 
         guardarTareas(tareas.listaTareas);
 
-        if (opt!=="0") await pausa();
-        
+        if (opt !== "0") await pausa();
+
     } while (opt !== "0");
-    
+
 }
 
 main();
