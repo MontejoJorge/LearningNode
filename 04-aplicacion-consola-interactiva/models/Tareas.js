@@ -1,3 +1,4 @@
+const { createPromptModule } = require("inquirer");
 const Tarea = require("./Tarea");
 
 class Tareas {
@@ -36,7 +37,31 @@ class Tareas {
                                     : "Completada".green
 
             console.log(`${index+1 + "."}`.green + `${tarea.desc} :: ${estado}`);
-        })
+        });
+    }
+
+    listarPendientesCompletadas(completadas = true) {
+
+        console.log("");
+        let index = 0;
+        
+        this.listaTareas.forEach((tarea) => {
+
+            if (completadas){
+                //Mostrar tareas completadas
+                if (tarea.completadoEn) {
+                    index+=1;
+                    console.log(`${(index + ".").green } ${tarea.desc} :: ${tarea.completadoEn}`);
+                }
+
+            } else {
+                //Mostrar tareas pendientes
+                if (!tarea.completadoEn) {
+                    index+=1;
+                    console.log(`${(index + ".").green } ${tarea.desc} :: ${"Pendiente".red}`);
+                }
+            }
+        });
     }
 }
 
