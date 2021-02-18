@@ -4,7 +4,8 @@ const {
     pausa,
     leerInput,
     listadoTareasBorrar,
-    confirmar
+    confirmar,
+    tareasChecklist
 } = require("./helpers/inquirer");
 
 const Tarea = require("./models/Tarea");
@@ -46,7 +47,11 @@ const main = async () => {
                 tareas.listarPendientesCompletadas(false);
                 break;
             case "5":
-                //TODO
+                const ids = await tareasChecklist(tareas.listaTareas);
+
+                if (ids[0]!=0){
+                    tareas.toggleCompletadas(ids);
+                }
                 break;
             case "6":
                 const id = await listadoTareasBorrar(tareas.listaTareas);
@@ -61,7 +66,6 @@ const main = async () => {
                 }
                 break;
         }
-
 
         guardarTareas(tareas.listaTareas);
 

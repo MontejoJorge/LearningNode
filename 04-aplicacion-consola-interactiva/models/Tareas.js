@@ -1,4 +1,5 @@
 const { createPromptModule } = require("inquirer");
+const timeSince = require("../helpers/functions");
 const Tarea = require("./Tarea");
 
 class Tareas {
@@ -57,7 +58,8 @@ class Tareas {
                 //Mostrar tareas completadas
                 if (tarea.completadaEn) {
                     index+=1;
-                    console.log(`${(index + ".").green } ${tarea.desc} :: ${(tarea.completadaEn).toString().green}`);
+                    
+                    console.log(`${(index + ".").green } ${tarea.desc} :: ${(timeSince(tarea.completadaEn)).toString().green}`);
                 }
 
             } else {
@@ -68,6 +70,27 @@ class Tareas {
                 }
             }
         });
+    }
+
+    toggleCompletadas(ids=[]) {
+        
+        ids.forEach(id => {
+
+            const tarea = this._lista[id];
+
+            if (!tarea.completadaEn) {
+                tarea.completadaEn = new Date();
+            }
+        });
+
+        this.listaTareas.forEach(tarea=> {
+            
+            if (!ids.includes(tarea.id)) {
+                this._lista[tarea.id].completadaEn = null;
+            }
+
+        });
+
     }
 }
 
