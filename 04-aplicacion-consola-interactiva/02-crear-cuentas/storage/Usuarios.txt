@@ -1,0 +1,1 @@
+[{"id":"708d9bcc-d337-4df0-99a6-05d7a025456e","nombre":"Jorge","genero":"H","username":"Keppler","contrasena":"9904a0c55a266d034ee8e7c0a90539de"},{"id":"2666773c-feef-4585-8286-6a5d8b05e670","nombre":"a","genero":"H","username":"a","contrasena":"0cc175b9c0f1b6a831c399e269772661"}]
