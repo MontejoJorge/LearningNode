@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { default: axios } = require("axios");
-const { leerInput, inquirerMenu, pausa } = require("./helpers/inquirer");
+const { leerInput, inquirerMenu, pausa, listarLugares } = require("./helpers/inquirer");
 const Busquedas = require("./models/Busquedas");
 
 const main = async() => {
@@ -14,9 +14,18 @@ const main = async() => {
 
         switch (opcion) {
             case 1:
-                const lugar = await leerInput("Ciudad: ");
-                busquedas.ciudad(lugar);
+                const termino = await leerInput("Ciudad: ");
+                const lugares = await busquedas.ciudad(termino);
 
+                const id = await listarLugares(lugares);
+                const lugarSel = lugares.find( l => l.id === id);
+                
+
+                //Mostrar resultados
+                console.log("\n Informacion de la ciudad\n");
+                console.log("Ciudad: ", lugarSel.nombre);
+                console.log("Latitud: ", lugarSel.lat);
+                console.log("Longitud: ", lugarSel.lng);
                 break;
         
             case 2:
