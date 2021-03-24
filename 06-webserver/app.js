@@ -1,8 +1,16 @@
 const express = require('express');
 const app = express();
 
+app.set('view engine', 'hbs');
+
 //contenido estatico
 app.use( express.static("public") );
+
+app.get('/', (req, res) => {
+    res.render("home", {
+        titulo: "Home"
+    });
+})
 
 app.get('/generic', (req, res) => {
     res.sendFile(__dirname + "/public/generic.html");
