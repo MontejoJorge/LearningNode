@@ -7,7 +7,7 @@ class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
-        
+
         this.usuariosPath = "/api/users";
 
         //Conectar base de datos
@@ -33,7 +33,7 @@ class Server {
         this.app.use(express.json());
 
         //Directorio publico
-        this.app.use( express.static("public") );
+        this.app.use(express.static("public"));
 
     }
 
@@ -41,11 +41,15 @@ class Server {
 
         this.app.use(this.usuariosPath, require("../routes/user"));
 
+        this.app.get('/', function (req, res) {
+            res.send('Hello World');
+        })
+
     }
 
     listen() {
 
-        this.app.listen( this.port , () => {
+        this.app.listen(this.port, () => {
             console.log("Servidor corriendo en puerto ", this.port);
         });
     }
